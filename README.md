@@ -4,14 +4,18 @@ Press a Windows shortcut while a multiple-choice question is visible. The script
 
 ## Setup on Windows 10
 
-1. Install the [standalone Codex CLI for Windows](https://github.com/openai/codex#quickstart). Open a new PowerShell window afterward so it can find `codex.exe`. The script does not need administrator rights.
-2. Run `codex login` and sign in with your ChatGPT account. Use `codex login status` to verify the sign-in. The script uses your Codex allowance.
-3. Download and run the script. Git is optional.
+1. In PowerShell, run this one-time setup command. It installs or reuses Codex, installs the listener, and starts ChatGPT device sign-in if needed.
 
    ```powershell
-   Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/Abdo-M23/screen-question/main/Screen-Question-Hotkey.ps1' -OutFile .\Screen-Question-Hotkey.ps1
-   Unblock-File -LiteralPath .\Screen-Question-Hotkey.ps1
-   powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File .\Screen-Question-Hotkey.ps1
+   irm https://raw.githubusercontent.com/Abdo-M23/screen-question/main/setup.ps1 | iex
+   ```
+
+   Open the link it prints on your phone or another computer and enter the code there. If needed, enable **Device code login** in ChatGPT under **Settings → Security**. As a fallback, run `codex login` for browser sign-in. Setup uses the official Windows ZIP on a fresh machine and works without `tar.exe`, Git, or administrator rights. You can [read the setup script](setup.ps1) before running it.
+
+2. Start the listener from the same PowerShell window. Use the same command whenever you want to start it again.
+
+   ```powershell
+   screen-question
    ```
 
 ## Shortcuts
@@ -22,7 +26,7 @@ Press a Windows shortcut while a multiple-choice question is visible. The script
 | **Ctrl+Alt+F10** | Stop the listener after dismissing any open message box |
 | **Ctrl+C** | Stop from the PowerShell window |
 
-Keep the question, all choices, and any required diagram visible. The listener stays active while the PowerShell window is open and handles one request at a time. If F9 is already registered by another app, add `-CaptureKey F8` after the script name in the launch command.
+Keep the question, all choices, and any required diagram visible. The listener stays active while the PowerShell window is open and handles one request at a time. If F9 is already registered by another app, run `screen-question -CaptureKey F8`.
 
 Everything visible on the captured monitor is included in the screenshot. The script removes its temporary PNG after each request, including timeouts. If PowerShell is forcibly terminated during a request, the PNG may remain in a `screen-question-hotkey-*` folder under `%TEMP%`.
 
