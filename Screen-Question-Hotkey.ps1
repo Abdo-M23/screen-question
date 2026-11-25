@@ -180,6 +180,7 @@ function Start-AnswerRequest {
         'exec', '--ephemeral', '--ignore-user-config', '--skip-git-repo-check'
         '--sandbox', 'read-only', '--color', 'never', '--disable', 'shell_tool'
         '-c', 'approval_policy=never', '-c', 'forced_login_method=chatgpt', '-c', 'web_search=disabled'
+        '-c', 'model_reasoning_effort=high'
         '--output-schema', 'answer-schema.json', '--output-last-message', 'answer.json'
         '--image', 'screen.png', '--', '-'
     )
